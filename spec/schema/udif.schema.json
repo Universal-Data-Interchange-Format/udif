@@ -1,0 +1,227 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/Universal-Data-Interchange-Format/udif/spec/schema/udif.schema.json",
+  "title": "Universal Data Interchange Format (UDIF) 2.0",
+  "description": "A modular, ethical, and AI-ready data format for sovereign, portable, and context-rich user data. Invented by Angela Benton.",
+  "type": "object",
+  "required": ["udif", "meta", "platform", "data_event"],
+  "properties": {
+    "udif": {
+      "type": "string",
+      "description": "UDIF specification version",
+      "enum": ["2.0"]
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "source": { "type": "string" },
+        "generator": { "type": "string" },
+        "session_id": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "user_id": { "type": "string" },
+        "consent_granted": { "type": "boolean" },
+        "consent_type": { 
+          "type": "string", 
+          "enum": ["explicit", "contextual", "implied"] 
+        },
+        "data_type": { "type": "string" }
+      },
+      "required": ["source", "session_id", "timestamp", "consent_granted"]
+    },
+    "identity": {
+      "type": "object",
+      "properties": {
+        "alias": { "type": "string" },
+        "public_key": { "type": "string" },
+        "persona_tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "archetype": { "type": "string" },
+        "language": { "type": "string" },
+        "timezone": { "type": "string" }
+      }
+    },
+    "context": {
+      "type": "object",
+      "properties": {
+        "location": {
+          "type": "object",
+          "properties": {
+            "latitude": { "type": "number" },
+            "longitude": { "type": "number" },
+            "geo_label": { "type": "string" }
+          },
+          "required": ["latitude", "longitude"]
+        },
+        "device": {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string" },
+            "os": { "type": "string" }
+          }
+        },
+        "emotional_state": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "presence_level": { 
+          "type": "string", 
+          "enum": ["low", "medium", "high"] 
+        },
+        "energy_score": { 
+          "type": "integer", 
+          "minimum": 1, 
+          "maximum": 10 
+        }
+      }
+    },
+    "platform": {
+      "type": "object",
+      "properties": {
+        "name": { 
+          "type": "string", 
+          "enum": ["OpenAI", "Google", "Anthropic", "Perplexity", "Custom"] 
+        },
+        "data_format": { 
+          "type": "string", 
+          "enum": ["json", "html", "markdown", "zip", "csv", "proprietary"] 
+        },
+        "source_type": { 
+          "type": "string", 
+          "enum": ["chat_log", "file", "search", "audio", "image", "multimodal"] 
+        },
+        "raw_schema_reference": { "type": "string" },
+        "export_date": { "type": "string", "format": "date-time" },
+        "session_reference_id": { "type": "string" }
+      },
+      "required": ["name", "data_format", "source_type", "export_date"]
+    },
+    "data_event": {
+      "type": "object",
+      "properties": {
+        "type": { "type": "string" },
+        "service": { "type": "string" },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "content_title": { "type": "string" },
+        "duration": { "type": "integer" },
+        "value_perceived": { 
+          "type": "integer", 
+          "minimum": 1, 
+          "maximum": 10 
+        },
+        "is_shareable": { "type": "boolean" },
+        "messages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "role": { 
+                "type": "string", 
+                "enum": ["user", "assistant"] 
+              },
+              "content": { "type": "string" },
+              "timestamp": { "type": "string", "format": "date-time" }
+            },
+            "required": ["role", "content", "timestamp"]
+          }
+        },
+        "shared_links": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["type", "service"]
+    },
+    "values": {
+      "type": "object",
+      "properties": {
+        "data_use_permissions": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "sharing_boundaries": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "preferred_exchanges": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "core_values": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "frequency": {
+      "type": "object",
+      "properties": {
+        "intended_impact": { "type": "string" },
+        "creative_source": { "type": "string" },
+        "self_expression_level": { 
+          "type": "string", 
+          "enum": ["low", "medium", "high"] 
+        },
+        "authenticity_score": { 
+          "type": "integer", 
+          "minimum": 1, 
+          "maximum": 10 
+        },
+        "energetic_signature": { "type": "string" }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "description": "Cryptographic metadata establishing origin, authenticity, and integrity",
+      "required": ["created_at", "source"],
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp of file creation"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp of last update"
+        },
+        "source": {
+          "type": "string",
+          "description": "Platform or system the data originated from"
+        },
+        "hash": {
+          "type": "string",
+          "description": "SHA-256 hash of the data_event object for integrity verification"
+        },
+        "signature": {
+          "type": "string",
+          "description": "Optional cryptographic signature proving authorship"
+        },
+        "chain": {
+          "type": "array",
+          "description": "Auditable history of every platform this data has moved through",
+          "items": {
+            "type": "object",
+            "properties": {
+              "platform": { "type": "string" },
+              "exported_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "hash": { 
+                "type": "string",
+                "description": "Hash of data at point of export, enabling tamper detection"
+              }
+            }
+          }
+        }
+      }
+    },
+    "raw_payload": { "type": "object" },
+    "raw_payload_ref": { "type": "string" }
+  }
+}
