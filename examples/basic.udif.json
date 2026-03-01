@@ -1,1 +1,19 @@
-
+{
+  "udif": "2.0",
+  "identity": {
+    "id": "example-user-001",
+    "display_name": "Example User"
+  },
+  "context": {
+    "preferences": {
+      "communication_style": "direct",
+      "topics_of_interest": ["data sovereignty", "AI", "technology policy"],
+      "values": ["privacy", "ownership", "transparency"]
+    }
+  },
+  "provenance": {
+    "created_at": "2026-03-01T00:00:00Z",
+    "source": "self-authored",
+    "hash": "placeholder-sha256-hash"
+  }
+}
