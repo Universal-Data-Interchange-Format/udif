@@ -33,6 +33,28 @@ def _format_utc(dt):
     return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
+def _normalize_timestamp(ts):
+    """Parse a string timestamp and normalize to ISO 8601 with Z suffix."""
+    for fmt in [
+        "%Y-%m-%dT%H:%M:%S.%fZ",
+        "%Y-%m-%dT%H:%M:%SZ",
+        "%Y-%m-%dT%H:%M:%S.%f%z",
+        "%Y-%m-%dT%H:%M:%S%z",
+        "%Y-%m-%dT%H:%M:%S.%f",
+        "%Y-%m-%dT%H:%M:%S",
+        "%Y-%m-%d %H:%M:%S",
+    ]:
+        try:
+            dt = datetime.strptime(ts, fmt)
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+            return _format_utc(dt)
+        except ValueError:
+            continue
+    # If nothing parses, return as-is (best effort)
+    return ts
+
+
 def sha256_hash(obj):
     """Generate SHA-256 hash of a JSON-serializable object."""
     return hashlib.sha256(
@@ -86,14 +108,16 @@ def extract_messages(chat_messages):
         if not content or not content.strip():
             continue
 
-        # Timestamp handling
+        # Timestamp handling — normalize all timestamps to ISO 8601 with Z suffix
         ts = msg.get("created_at") or msg.get("timestamp") or msg.get("updated_at")
         if ts:
-            # If it's a numeric timestamp, convert it
             if isinstance(ts, (int, float)):
                 timestamp = _format_utc(datetime.fromtimestamp(ts, tz=timezone.utc))
+            elif isinstance(ts, str):
+                # Try to parse and normalize string timestamps
+                timestamp = _normalize_timestamp(ts)
             else:
-                timestamp = ts
+                timestamp = _format_utc(datetime.now(timezone.utc))
         else:
             timestamp = _format_utc(datetime.now(timezone.utc))
 

@@ -78,8 +78,8 @@ def parse_gemini_timestamp(ts):
                 return _format_utc(dt)
             except ValueError:
                 continue
-        # If nothing parses, return as-is
-        return ts
+        # If nothing parses, return as-is (may not be valid ISO 8601)
+        return None
 
     return None
 

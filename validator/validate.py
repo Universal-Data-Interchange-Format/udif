@@ -17,6 +17,7 @@ License: Apache 2.0
 
 import json
 import hashlib
+import re
 import sys
 import os
 import glob
@@ -47,6 +48,18 @@ def load_schema():
 
     with open(schema_path, "r", encoding="utf-8") as f:
         return json.load(f)
+
+
+_ISO8601_RE = re.compile(
+    r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}"
+    r"(\.\d+)?"
+    r"(Z|[+-]\d{2}:\d{2})$"
+)
+
+
+def _is_valid_datetime(value):
+    """Check if a string is a valid ISO 8601 date-time."""
+    return isinstance(value, str) and bool(_ISO8601_RE.match(value))
 
 
 def sha256_hash(obj):
@@ -108,9 +121,10 @@ def validate_file(filepath, schema=None):
             result["valid"] = False
             result["errors"].append(f"Missing required field: {field}")
 
-    # Version check
+    # Version check — schema defines "const": "2.0"
     if doc.get("udif") != "2.0":
-        result["warnings"].append(
+        result["valid"] = False
+        result["errors"].append(
             f"Unexpected UDIF version: {doc.get('udif')} (expected '2.0')"
         )
 
@@ -124,12 +138,23 @@ def validate_file(filepath, schema=None):
     if meta.get("consent_granted") is not True:
         result["warnings"].append("consent_granted is not True")
 
+    # Timestamp format checks (schema specifies format: date-time)
+    if "timestamp" in meta and not _is_valid_datetime(meta["timestamp"]):
+        result["warnings"].append(
+            f"meta.timestamp is not valid ISO 8601: {meta['timestamp']}"
+        )
+
     # Platform validation
     platform = doc.get("platform", {})
     for field in ["name", "data_format", "source_type", "export_date"]:
         if field not in platform:
             result["valid"] = False
             result["errors"].append(f"Missing required platform field: {field}")
+
+    if "export_date" in platform and not _is_valid_datetime(platform["export_date"]):
+        result["warnings"].append(
+            f"platform.export_date is not valid ISO 8601: {platform['export_date']}"
+        )
 
     # Data event validation
     data_event = doc.get("data_event", {})
@@ -152,9 +177,20 @@ def validate_file(filepath, schema=None):
                 f"Message {i}: unexpected role '{msg.get('role')}' "
                 f"(expected 'user' or 'assistant')"
             )
+        if "timestamp" in msg and not _is_valid_datetime(msg["timestamp"]):
+            result["warnings"].append(
+                f"Message {i}: timestamp is not valid ISO 8601: {msg['timestamp']}"
+            )
+
+    # Provenance required fields — schema requires created_at and source
+    provenance = doc.get("provenance", {})
+    if provenance:
+        for field in ["created_at", "source"]:
+            if field not in provenance:
+                result["valid"] = False
+                result["errors"].append(f"Missing required provenance field: {field}")
 
     # Provenance hash verification
-    provenance = doc.get("provenance", {})
     if provenance.get("hash") and "data_event" in doc:
         expected_hash = sha256_hash(data_event)
         actual_hash = provenance["hash"]
