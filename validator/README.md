@@ -1,17 +1,35 @@
 # UDIF Validator
 
-The reference validator checks whether a file conforms to the 
-UDIF 2.0 specification.
-
-## Status
-
-In development. See the main spec in `/spec/udif-2.0.md` for 
-the current schema definition.
+Validates UDIF 2.0 files against the official JSON Schema and performs integrity checks.
 
 ## Usage
 
-Coming soon.
+```bash
+# Validate a single file
+python validate.py conversation.udif.json
 
-## Contributing
+# Validate all UDIF files in a directory
+python validate.py /path/to/output/
+```
 
-See CONTRIBUTING.md.
+## What It Checks
+
+- **Schema compliance** — validates against `spec/schema/udif.schema.json`
+- **Required fields** — verifies `udif`, `meta`, `platform`, `data_event` are present
+- **Message structure** — checks each message has `role`, `content`, `timestamp`
+- **Provenance integrity** — recomputes SHA-256 hash and compares to stored hash
+- **Chain validation** — verifies provenance chain entries have required fields
+- **Value ranges** — checks scores are within 1-10 bounds
+
+## Dependencies
+
+- Python 3.7+ (required)
+- `jsonschema` (optional, recommended) — `pip install jsonschema`
+
+Without `jsonschema`, the validator still checks required fields and provenance
+but cannot perform full JSON Schema validation.
+
+## Exit Codes
+
+- `0` — all files valid
+- `1` — one or more files invalid

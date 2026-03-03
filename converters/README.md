@@ -13,9 +13,9 @@ giving you a file you actually own that any system can read.
 
 | Platform | Status |
 |----------|--------|
-| ChatGPT | In development |
-| Claude | In development |
-| Gemini | In development |
+| ChatGPT | ✓ Available |
+| Claude | ✓ Available |
+| Gemini | ✓ Available |
 
 ## How to Use
 
