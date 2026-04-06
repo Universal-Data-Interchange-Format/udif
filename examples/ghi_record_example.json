@@ -1,0 +1,55 @@
+{
+  "udif_version": "3.0",
+  "document_type": "ghi_record",
+  "meta": {
+    "source": "structured interview — 90-minute guided reflection session",
+    "generator": "prova-elicitation-engine-v0.1",
+    "timestamp": "2026-04-02T10:30:00Z",
+    "subject_id": "subject_mkarimi_001",
+    "consent_granted": true,
+    "consent_type": "explicit",
+    "pave_protocol_reference": "https://github.com/[PAVE repo when published]"
+  },
+  "ghi_record": {
+    "domain": ["supply chain logistics", "emerging market operations", "crisis management"],
+    "time_period": {
+      "start": "2017-03-01",
+      "end": "2023-11-15"
+    },
+    "context": "Led procurement and logistics for a mid-size medical device distributor operating across East Africa. Managed supplier relationships spanning four countries during two major disruptions: the 2020 global supply chain crisis and the 2021 Suez Canal blockage. Operated with a lean team of six in Nairobi with regional partners in Kampala, Dar es Salaam, and Addis Ababa.",
+    "perspective_data": {
+      "distinctive_lens": "Most supply chain managers in the region optimized for cost per unit. I optimized for relationship durability — the ability of a supplier partnership to survive a shock without renegotiation. This came from watching three competitors lose their entire supplier base in 2020 because their contracts had no flexibility built in. I treated every supplier agreement as a stress test, not a price negotiation.",
+      "what_I_saw_others_didnt": "During the Suez blockage, everyone scrambled to find alternative shipping routes. I noticed that the real bottleneck was not the ships — it was customs clearance staffing at Mombasa port, which had been cut by forty percent during COVID and never restored. I rerouted two critical shipments through Dar es Salaam three days before Mombasa processing times tripled. That decision saved the company an estimated $340,000 in delay penalties."
+    },
+    "judgment_data": {
+      "decision": "In September 2021, I terminated our largest supplier contract — a relationship that represented thirty-eight percent of our annual volume — because the supplier began requiring ninety-day advance payment instead of net-thirty terms.",
+      "stakes": "Losing the supplier meant we had no backup for three critical product lines. Our sales team estimated a revenue gap of $1.2 million over six months. Two board members explicitly opposed the decision.",
+      "reasoning": "The payment term change was not about cash flow — the supplier was preparing to exit the East African market entirely and was extracting maximum short-term value. Agreeing to their terms would have meant prepaying for inventory from a supplier who would stop servicing warranty claims within a year. I had seen this pattern before with a different supplier in 2019.",
+      "consequence": "We found two smaller regional suppliers within eight weeks. Initial costs were fourteen percent higher, but both offered net-thirty terms and local warranty service. When the original supplier exited the market five months later, competitors who had stayed were left with unsupported inventory. Our revenue dip was $410,000 — roughly a third of the projected worst case.",
+      "learned": "The most dangerous supplier is one who changes terms without explaining why. Payment terms are a leading indicator of strategic intent, not a negotiation tactic. I now treat any unexplained term change as a signal to investigate the supplier's broader business position before responding to the terms themselves."
+    },
+    "interpretive_data": {
+      "framework_emerged": "Supplier Stress Index — an informal scoring model I developed that weights three factors: term stability over the last eight quarters, communication responsiveness during disruptions, and willingness to share their own supply chain risks transparently. Suppliers scoring below a threshold on any two factors get flagged for contingency planning regardless of their pricing.",
+      "principle_crystallized": "In emerging market logistics, the reliability of a relationship is more valuable than the efficiency of a transaction. Systems optimized purely for cost will fail at the exact moment cost matters most.",
+      "transferable_pattern": "When an established partner changes terms suddenly, the explanation they give is less important than the explanation they do not give. Unexplained behavioral shifts in long-term business relationships are almost always strategic — they reflect a decision already made, not a negotiation still open."
+    }
+  },
+  "provenance": {
+    "created_at": "2026-04-02T12:15:00Z",
+    "updated_at": "2026-04-02T12:15:00Z",
+    "source": "prova-elicitation-engine-v0.1",
+    "hash": "a1c4e87f2b3d6e9a0c5f8b1d4e7a2c5f8b1d4e7a0c3f6a9d2e5b8c1f4a7d0e3",
+    "signature": "subject-signature-placeholder",
+    "chain": [
+      {
+        "platform": "prova-elicitation-engine",
+        "exported_at": "2026-04-02T12:15:00Z",
+        "hash": "a1c4e87f2b3d6e9a0c5f8b1d4e7a2c5f8b1d4e7a0c3f6a9d2e5b8c1f4a7d0e3"
+      }
+    ]
+  },
+  "schema_gaps": [
+    "Subject described a network of informal information-sharing relationships with competitors that informed early warning signals — no field captures inter-firm intelligence networks",
+    "Subject referenced cultural negotiation norms specific to East African business contexts that shaped their approach — no field captures culturally situated reasoning"
+  ]
+}

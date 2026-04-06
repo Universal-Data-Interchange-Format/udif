@@ -40,6 +40,24 @@ The goal is the same as the original: a file you own, that any system can read, 
 
 ---
 
+## UDIF 3.0 — Generative Human Intelligence (GHI)
+
+UDIF 3.0 introduces a third data class: Generative Human Intelligence. GHI is the knowledge that exists inside people — not recorded in any platform, not captured in any export, not stored in any database. It has to be drawn out before it can be structured.
+
+GHI data is organized into three types:
+
+- **Perspective Data** — how you see. The distinctive lens you bring to a domain, shaped by your specific experience. What you noticed that others in the same room did not.
+- **Judgment Data** — how you act on what you know. The decisions you made, what was at stake, how you reasoned through it, what happened, and what you learned.
+- **Interpretive Data** — how you make sense of what you see. The frameworks that emerged from your experience, the principles you crystallized, and the patterns you identified that transfer beyond their original context.
+
+GHI data does not exist in exportable form on any platform. It must be elicited — through structured interviews, guided reflection, or other deliberate processes — before it can be captured in a portable format. UDIF 3.0 defines the interchange schema for GHI records once they have been elicited and structured. It does not define the elicitation methodology or the meaning of the data itself.
+
+The GHI taxonomy and the protocols governing its valuation and licensing are defined by the [PAVE Protocol](https://github.com/[PAVE repo when published]), owned by Fruit Ventures LLC. UDIF references the PAVE taxonomy but does not replicate it.
+
+The UDIF v3 converter is in development as part of the [Prova](https://yourheirloom.ai) product.
+
+---
+
 ## Why This Matters Now
 
 In early 2026, the two largest AI companies launched features called "data portability" — ways to move memories and context from one AI platform to another. Neither feature produces a file the user owns. Both deposit data into the new platform's infrastructure under the new platform's terms.
