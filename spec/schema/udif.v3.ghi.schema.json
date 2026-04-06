@@ -1,0 +1,201 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/Universal-Data-Interchange-Format/udif/spec/schema/udif.v3.ghi.schema.json",
+  "title": "Universal Data Interchange Format (UDIF) 3.0 — Generative Human Intelligence (GHI)",
+  "description": "A schema for portable, structured Generative Human Intelligence records. GHI data represents perspective, judgment, and interpretive knowledge elicited from human subjects. The GHI taxonomy is defined by the PAVE Protocol; UDIF defines the interchange format for portability and interoperability.",
+  "type": "object",
+  "required": ["udif_version", "document_type", "meta", "ghi_record", "provenance"],
+  "properties": {
+    "udif_version": {
+      "type": "string",
+      "description": "UDIF specification version",
+      "enum": ["3.0"]
+    },
+    "document_type": {
+      "type": "string",
+      "description": "Type of UDIF document",
+      "enum": ["ghi_record"]
+    },
+    "meta": {
+      "type": "object",
+      "description": "Metadata describing the origin and consent context of the GHI record",
+      "required": ["source", "generator", "timestamp", "subject_id", "consent_granted", "consent_type"],
+      "properties": {
+        "source": {
+          "type": "string",
+          "description": "How the GHI data was elicited (e.g., structured interview, guided reflection session)"
+        },
+        "generator": {
+          "type": "string",
+          "description": "Tool or model that produced the structured record from raw elicitation"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp of record creation"
+        },
+        "subject_id": {
+          "type": "string",
+          "description": "Identifier for the human subject whose GHI is captured"
+        },
+        "consent_granted": {
+          "type": "boolean",
+          "description": "Whether the subject granted consent for this record"
+        },
+        "consent_type": {
+          "type": "string",
+          "description": "Type of consent obtained from the subject",
+          "enum": ["explicit", "contextual", "implied"]
+        },
+        "pave_protocol_reference": {
+          "type": "string",
+          "description": "Reference URL for the PAVE Protocol specification that defines the GHI taxonomy"
+        }
+      }
+    },
+    "ghi_record": {
+      "type": "object",
+      "description": "The core GHI data containing perspective, judgment, and interpretive knowledge",
+      "required": ["domain", "time_period", "context", "perspective_data", "judgment_data", "interpretive_data"],
+      "properties": {
+        "domain": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Primary domains of expertise relevant to this record"
+        },
+        "time_period": {
+          "type": "object",
+          "description": "The time period this GHI record covers",
+          "required": ["start", "end"],
+          "properties": {
+            "start": {
+              "type": "string",
+              "description": "ISO 8601 date marking the start of the relevant period"
+            },
+            "end": {
+              "type": "string",
+              "description": "ISO 8601 date marking the end of the relevant period, or 'present'"
+            }
+          }
+        },
+        "context": {
+          "type": "string",
+          "description": "Situational description of the environment or conditions in which the GHI was generated"
+        },
+        "perspective_data": {
+          "type": "object",
+          "description": "How the subject sees — the distinctive lens shaped by their experience",
+          "required": ["distinctive_lens", "what_I_saw_others_didnt"],
+          "properties": {
+            "distinctive_lens": {
+              "type": "string",
+              "description": "The unique viewpoint or frame the subject brings to this domain"
+            },
+            "what_I_saw_others_didnt": {
+              "type": "string",
+              "description": "Specific insight or observation the subject identified that others in the same context missed"
+            }
+          }
+        },
+        "judgment_data": {
+          "type": "object",
+          "description": "How the subject acts on what they know — decisions, stakes, reasoning, and outcomes",
+          "required": ["decision", "stakes", "reasoning", "consequence", "learned"],
+          "properties": {
+            "decision": {
+              "type": "string",
+              "description": "The specific decision the subject made"
+            },
+            "stakes": {
+              "type": "string",
+              "description": "What was at risk when the decision was made"
+            },
+            "reasoning": {
+              "type": "string",
+              "description": "The reasoning process behind the decision"
+            },
+            "consequence": {
+              "type": "string",
+              "description": "What happened as a result of the decision"
+            },
+            "learned": {
+              "type": "string",
+              "description": "What the subject learned from the outcome"
+            }
+          }
+        },
+        "interpretive_data": {
+          "type": "object",
+          "description": "How the subject makes sense of what they see — frameworks, principles, and transferable patterns",
+          "required": ["principle_crystallized", "transferable_pattern"],
+          "properties": {
+            "framework_emerged": {
+              "type": ["string", "null"],
+              "description": "A mental model or framework that emerged from the subject's experience, or null if none crystallized"
+            },
+            "principle_crystallized": {
+              "type": "string",
+              "description": "A guiding principle the subject distilled from their experience"
+            },
+            "transferable_pattern": {
+              "type": "string",
+              "description": "A pattern the subject identified that applies beyond the original context"
+            }
+          }
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "description": "Cryptographic metadata establishing origin, authenticity, and integrity of the GHI record",
+      "required": ["created_at", "source"],
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp of record creation"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp of last update"
+        },
+        "source": {
+          "type": "string",
+          "description": "System or process that produced this record"
+        },
+        "hash": {
+          "type": "string",
+          "description": "SHA-256 hash of the ghi_record object for integrity verification"
+        },
+        "signature": {
+          "type": "string",
+          "description": "Cryptographic signature from the subject proving authorship and consent"
+        },
+        "chain": {
+          "type": "array",
+          "description": "Auditable history of every system this record has moved through",
+          "items": {
+            "type": "object",
+            "properties": {
+              "platform": { "type": "string" },
+              "exported_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "hash": {
+                "type": "string",
+                "description": "Hash of data at point of export, enabling tamper detection"
+              }
+            }
+          }
+        }
+      }
+    },
+    "schema_gaps": {
+      "type": "array",
+      "description": "Gaps flagged during extraction where the schema could not fully capture the subject's knowledge. These are observations, not invented fields.",
+      "items": { "type": "string" }
+    }
+  }
+}
