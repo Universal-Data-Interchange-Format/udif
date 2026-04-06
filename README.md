@@ -52,7 +52,7 @@ GHI data is organized into three types:
 
 GHI data does not exist in exportable form on any platform. It must be elicited — through structured interviews, guided reflection, or other deliberate processes — before it can be captured in a portable format. UDIF 3.0 defines the interchange schema for GHI records once they have been elicited and structured. It does not define the elicitation methodology or the meaning of the data itself.
 
-The GHI taxonomy and the protocols governing its valuation and licensing are defined by the [PAVE Protocol](https://github.com/[PAVE repo when published]), owned by Fruit Ventures LLC. UDIF references the PAVE taxonomy but does not replicate it.
+The GHI taxonomy and the protocols governing its valuation and licensing are defined by the [PAVE Protocol](https://github.com/PAVE-Protocol/pave), owned by Fruit Ventures LLC. UDIF references the PAVE taxonomy but does not replicate it.
 
 The UDIF v3 converter is in development as part of the [Prova](https://yourheirloom.ai) product.
 
@@ -99,5 +99,6 @@ See [LICENSE](./LICENSE) for full terms.
 
 - [Heirloom](https://yourheirloom.ai) — the data sovereignty protocol built on UDIF
 - [Angela Benton](https://angelabenton.com) — inventor
+- [PAVE Protocol](https://github.com/PAVE-Protocol/pave) — GHI taxonomy and licensing protocol
 - Patent record: [US20220300636A1](https://patents.google.com/patent/US20220300636A1)
 
